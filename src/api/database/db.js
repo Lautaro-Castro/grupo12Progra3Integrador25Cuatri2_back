@@ -12,6 +12,6 @@ const connection = mysql.createPool({
     database: database.name,
     user: database.user,
     password: database.password
-})
+});
 
 export default connection;
