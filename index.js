@@ -11,6 +11,10 @@ import connection from "./src/api/database/db.js";
 
 import cors from "cors";
 app.use(cors());
+
+/*===================
+     PELICULAS
+===================*/
 //Consulta para obtener todas las peliculas disponibles en cartelera
 app.get("/peliculas", async (req, res) => {
 
@@ -51,6 +55,33 @@ app.get("/peliculasAEstrenar", async (req, res) => {
 
         res.status(500).json({
             message: "Error interno al obtener las peliculas"
+        });
+    }
+});
+
+
+/*===================
+     CANDY
+===================*/
+
+//Consulta para obtener todos las productos disponibles
+app.get("/productos", async (req, res) => {
+
+    try {
+        //Obtenemos todas los productos activos
+        const sql = `SELECT * FROM candy WHERE activo = 1 AND tipo = 'producto'`;
+        const [rows] = await connection.query(sql);
+        res.status(200).json({
+            payload: rows,
+            message: rows.length === 0 ? "No se encontraron productos disponibles" : "Productos disponibles"
+        })
+
+    } catch (error) {
+        //Mostramos por consola si hubo un error al obtener los productos y enviamos la respuesta correspondiente con status 500
+        console.error("Error al obtener los productos", error);
+
+        res.status(500).json({
+            message: "Error interno al obtener los productos"
         });
     }
 });
