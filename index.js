@@ -1,20 +1,30 @@
-//Se importa express y se crea la app
+//Se importamos las librerias que usara la app
 import express from "express";
-const app = express();
+import cors from "cors";
 
-//Se importa environments del archivo js y se btiene el PORT
+//Creamos la app
+const app = express();
+// Importamos las rutas de producto
+import { peliculasRoutes } from "./src/api/routes/index.js";
+
+//Se importa environments del archivo js y se obtiene el PORT
 import environments from "./src/api/config/environments.js";
 const PORT = environments.port;
 
-//Se importa la conexion a la BD
-import connection from "./src/api/database/db.js";
 
-import cors from "cors";
-app.use(cors());
+/*===================
+    Middlewares
+====================*/
+app.use(cors()); // Middleware CORS basico que permite todas las solicitudes
+app.use(express.json()); // Middleware para parsear JSON en el body
+
 
 /*===================
      PELICULAS
 ===================*/
+
+app.use("/api/peliculas", peliculasRoutes);
+/*
 //Consulta para obtener todas las peliculas disponibles en cartelera
 app.get("/peliculas", async (req, res) => {
 
@@ -59,7 +69,38 @@ app.get("/peliculasAEstrenar", async (req, res) => {
     }
 });
 
+//Consulta para obtener pelicula por id
+app.get("/peliculas/:id", async (req, res) => {
 
+    try {
+        //Obtenemos la pelicula por id
+        let {id} = req.params; // Esto nos permite obtener el valor numerico despues de peliculas
+
+        const sql = `SELECT * FROM peliculas WHERE id = ?`;
+        const [rows] = await connection.query(sql, [id]);
+
+        if(rows.length === 0) {
+            console.log("Error, no existe peliucla con ese id");
+
+            return res.status(404).json({
+                message: `No se encontro pelicula con id ${id}`
+            });
+        }
+
+        res.status(200).json({
+            payload: rows
+        });
+
+    } catch (error) {
+        //Mostramos por consola si hubo un error al obtener las peliculas y enviamos la respuesta correspondiente con status 500
+        console.error("Error obteniendo pelicula con id", error.message);
+
+        res.status(500).json({
+            message: "Error interno al obtener pelicula con id"
+        });
+    }
+});
+*/
 /*===================
      CANDY
 ===================*/
