@@ -1,9 +1,9 @@
-import PeliculasModels from "../models/peliculas.models.js";
+import peliculaModels from "../models/peliculas.models.js";
 
 export const getPeliculasEnCartelera = async (req, res) => {
     try {
         
-        const [rows] = await PeliculasModels.getPeliculasEnCartelera();
+        const [rows] = await peliculaModels.getPeliculasEnCartelera();
 
         res.status(200).json({
             payload: rows,
@@ -23,7 +23,7 @@ export const getPeliculasEnCartelera = async (req, res) => {
 export const getPeliculasEnPreVenta = async (req, res) => {
     try {
         
-        const [rows] = await PeliculasModels.getPeliculasEnPreVenta();
+        const [rows] = await peliculaModels.getPeliculasEnPreVenta();
 
         res.status(200).json({
             payload: rows,
@@ -46,7 +46,7 @@ export const getPeliculaPorId = async (req, res) => {
         //Obtenemos la pelicula por id
         let {id} = req.params; // Esto nos permite obtener el valor numerico despues de peliculas
 
-        const [rows] = await PeliculasModels.getPeliculaPorId(id);
+        const [rows] = await peliculaModels.getPeliculaPorId(id);
 
         //Comprobamos que existe la pelicula con ese id
         if(rows.length === 0) {
