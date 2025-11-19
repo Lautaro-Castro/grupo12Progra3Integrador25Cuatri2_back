@@ -6,8 +6,9 @@ import cors from "cors";
 const app = express();
 
 // Importamos las rutas de pelicula y candy
-import { peliculasRoutes } from "./src/api/routes/index.js";
+import { idiomasRoutes, peliculasRoutes } from "./src/api/routes/index.js";
 import { candyRoutes } from "./src/api/routes/index.js";
+import { formatosRoutes } from "./src/api/routes/index.js";
 
 //Se importa environments del archivo js y se obtiene el PORT
 import environments from "./src/api/config/environments.js";
@@ -33,6 +34,12 @@ app.use("/api/peliculas", peliculasRoutes);
 
 //Consulta para obtener todos las productos disponibles
 app.use("/api/candy", candyRoutes);
+
+//Consulta para obtener los formatos
+app.use("/api/formatos", formatosRoutes);
+
+//Consulta para obtener idiomas
+app.use("/api/idiomas", idiomasRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
