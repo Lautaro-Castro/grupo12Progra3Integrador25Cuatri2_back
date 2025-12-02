@@ -12,7 +12,7 @@ const getFuncionesPorIdPelicula = (pelicula_id, preventa, formato_id = null, idi
         F.fecha, 
         F.hora, 
         F.butacas_disponibles,
-        F.activa, 
+        F.activa,
 
         /*Datos de tabla formatos*/
         FO.nombre AS formato, 
@@ -29,8 +29,11 @@ const getFuncionesPorIdPelicula = (pelicula_id, preventa, formato_id = null, idi
         const values = [pelicula_id];
 
         //Verificamos que no sea preventa para traer peliculas activas (Ya que si no es preventa y ya no esta activa quiere decir que no esta mas en cartelera). Si es preventa no aplicamos este filtro debido a que la pelicula todavia no esta en cartelera pero lo estara y deberia permitir comprar entradas de futuras funciones.
-        if(!preventa){
+        if(preventa === false){
             sql+= ` AND F.activa = 1`;
+        }else if(preventa === true){
+            sql+= ` AND F.activa = 0`;
+            console.log("hola")
         }
 
         //Validamos si la consulta tiene que filtrar por formato o idioma
@@ -69,29 +72,38 @@ const getFunciones = (pelicula_id = null, preventa = null, formato_id = null, id
         F.fecha, 
         F.hora, 
         F.butacas_disponibles,
-        F.activa, 
+        F.activa,
+        F.pelicula_id, 
 
         /*Datos de tabla formatos*/
         FO.nombre AS formato, 
         FO.precio AS precio,
 
         /*Datos Idioma*/
-        I.nombre AS idioma
+        I.nombre AS idioma,
+
+        /*Nombre Pelicula*/
+        P.nombre AS pelicula_nombre
 
         FROM funciones AS F 
         LEFT JOIN formatos AS FO ON FO.id = F.formato_id 
         LEFT JOIN idiomas AS I ON I.id = F.idioma_id
+        LEFT JOIN peliculas AS P ON P.id = F.pelicula_id
         WHERE F.butacas_disponibles > 0`;
 
-        if (!pelicula_id){
+        if (pelicula_id){
             sql += ` AND pelicula_id = ?`
             values.push(pelicula_id);
 
         }
 
         //Verificamos que no sea preventa para traer peliculas activas (Ya que si no es preventa y ya no esta activa quiere decir que no esta mas en cartelera). Si es preventa no aplicamos este filtro debido a que la pelicula todavia no esta en cartelera pero lo estara y deberia permitir comprar entradas de futuras funciones.
-        if(preventa === 0){
+        if(!preventa){
             sql+= ` AND F.activa = 1`;
+            console.log("entro a !preventa");
+        }else{
+            sql+= ` AND F.activa = 0`;
+            console.log("entro al else");
         }
 
         //Validamos si la consulta tiene que filtrar por formato o idioma
@@ -110,7 +122,7 @@ const getFunciones = (pelicula_id = null, preventa = null, formato_id = null, id
             values.push(fecha);
         }else{
             //Tomamos la fecha con el objeto Date y lo convertimos a string con el metodo toISOString(). Tambien usamos split("T") para separar la fecha de la hora y con el [0] nos quedamos solo con la fecha.
-            const fechaHoy = new Date().toISOString().split("T")[0]; 
+            const fechaHoy = new Date().toISOString(); 
             sql += ` AND fecha >= ?`;
             values.push(fechaHoy);
         }

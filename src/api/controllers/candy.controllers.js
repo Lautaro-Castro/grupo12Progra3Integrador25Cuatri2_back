@@ -11,8 +11,6 @@ export const getProductos = async (req, res) => {
         })
 
     } catch (error) {
-        //Mostramos por consola si hubo un error al obtener los productos y enviamos la respuesta correspondiente con status 500
-        console.error("Error al obtener los productos", error);
 
         res.status(500).json({
             message: "Error interno al obtener los productos"
@@ -31,8 +29,6 @@ export const getCombos = async (req, res) => {
         })
 
     } catch (error) {
-        //Mostramos por consola si hubo un error al obtener los combos y enviamos la respuesta correspondiente con status 500
-        console.error("Error al obtener los combos", error.message);
 
         res.status(500).json({
             message: "Error interno al obtener los combos"
