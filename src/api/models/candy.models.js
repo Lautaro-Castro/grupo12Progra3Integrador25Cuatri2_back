@@ -12,6 +12,13 @@ const getCombos = () => {
     return connection.query(sql);
 }
 
+//Obtenemos todas los combos activos
+const getCandy = (tipo) => {
+    const sql = `SELECT * FROM candy WHERE activo = 1 AND tipo = ? `;
+    
+    return connection.query(sql);
+}
+
 export default {
     getProductos,
     getCombos
