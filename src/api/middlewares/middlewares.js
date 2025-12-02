@@ -17,15 +17,11 @@ const validateId = (req, res, next) => {
 const isPreventa = async (req, res, next ) =>{
     try {
         const {id} = req.params;   
-
         const [rows] = await peliculaModels.getPeliculaPorId(id);
         const pelicula = rows[0];
         const hoy = new Date().toISOString().split("T")[0];
         const fechaEstrenoPelicula = pelicula.fecha_estreno.toISOString().split("T")[0];
         req.esPreventa = parseInt(pelicula.activa) === 0 && fechaEstrenoPelicula > hoy;
-        console.log(req.esPreventa);
-        
-        
         next();
 
     } catch (error) {
@@ -35,10 +31,8 @@ const isPreventa = async (req, res, next ) =>{
     }
 }
 
-
 export {
     validateId,
     isPreventa
-
 }
 
