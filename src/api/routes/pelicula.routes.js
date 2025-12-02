@@ -1,5 +1,9 @@
 import {Router} from "express";
 import { getPeliculaPorId, getPeliculasEnCartelera, getPeliculasEnPreVenta } from "../controllers/peliculas.controllers.js";
+import { getFuncionesPorIdPelicula } from "../controllers/funciones.controllers.js";
+import { isPreventa, validateId } from "../middlewares/middlewares.js";
+
+
 const router = Router();
 
 //Obtenemos peliculas en cartelera
@@ -9,7 +13,9 @@ router.get("/cartelera", getPeliculasEnCartelera);
 router.get("/preventa", getPeliculasEnPreVenta);
 
 //Obtenemos pelicula por id
-router.get("/:id", getPeliculaPorId);
+router.get("/:id",validateId , getPeliculaPorId);
 
+//Obtenemos las funciones de una pelicula mediante su Id
+router.get("/:id/funciones", validateId,isPreventa, getFuncionesPorIdPelicula);
 
 export default router;
