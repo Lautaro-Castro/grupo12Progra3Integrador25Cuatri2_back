@@ -376,7 +376,7 @@ button:active {
 }
 
 /* BOTÓN CANCELAR */
-#btn-cancelar-creacion-funcion, #btn-cancelar-creacion-pelicula, #btn-cancelar-creacion-candy {
+#btn-cancelar-creacion-funcion, #btn-cancelar-creacion-pelicula, #btn-cancelar-creacion-candy, #btn-cancelar-edicion-funcion, #btn-cancelar-edicion-pelicula, #btn-cancelar-edicion-candy {
     display: block;
     margin: 0.5rem auto 2rem auto;
     padding: 0.6rem 1.8rem;
@@ -390,6 +390,7 @@ button:active {
     display: flex;
     justify-content: center;
 }
+
 
 #btn-cancelar-creacion-funcion:hover,
 #btn-cancelar-creacion-candy:hover {
