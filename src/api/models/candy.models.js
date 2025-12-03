@@ -6,6 +6,13 @@ const getCandyPorTipo = (tipo) => {
     return connection.query(sql, [tipo]);
 }
 
+const getCandyPorId = (id) => {
+
+    //Usamos ? por seguridad y evitar inyecciones sql
+    const sql = `SELECT * FROM candy WHERE id = ?`;
+    return connection.query(sql, [id]); // El id reemplaza nuestro ?
+}
+
 const insertCandy = (candy) => {
     let sql = `INSERT INTO candy (nombre, descripcion, precio, imagen_url, activo, tipo) VALUES (?, ?, ?, ?, ?, ?)`;
 
@@ -17,7 +24,7 @@ const insertCandy = (candy) => {
 const updateCandy = (candy) => {
     let sql = `UPDATE candy SET nombre = ?, descripcion = ?, precio = ?,imagen_url = ?, activo = ?, tipo = ? WHERE id = ?`;
 
-    const values = [candy.nombre, candy.descripcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo]
+    const values = [candy.nombre, candy.descripcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo , candy.id]
 
     return connection.query(sql, values);
 }
@@ -30,6 +37,7 @@ const deleteCandy = (id) =>{
 
 export default {
     getCandyPorTipo,
+    getCandyPorId,
     insertCandy,
     updateCandy,
     deleteCandy

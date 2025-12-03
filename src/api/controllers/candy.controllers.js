@@ -26,6 +26,33 @@ export const getCandy = async (req, res) => {
     }
 }
 
+export const getCandyPorId = async (req, res) => {
+    try {
+            //Obtenemos el candy por id
+            let {id} = req.params; // Esto nos permite obtener el valor numerico despues de peliculas
+    
+            const [rows] = await candyModels.getCandyPorId(id);
+    
+            //Comprobamos que existe la pelicula con ese id
+            if(rows.length === 0) {
+                console.log("Error, no existe candy con ese id");
+    
+                return res.status(404).json({
+                    message: `No se encontro candy con id ${id}`
+                });
+            }
+            
+            res.status(200).json({
+                payload: rows[0]
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: "Error interno al obtener candy con id"
+            });
+        }
+}
+
+
 export const createCandy = async (req, res) => {
 
     try {
@@ -60,7 +87,6 @@ export const modifyCandy = async (req, res) => {
             message: "Candy modificado con exito"
         });
     } catch (error) {
-
         res.status(500).json({
             message: "Error interno del servidor",
             error: error.message

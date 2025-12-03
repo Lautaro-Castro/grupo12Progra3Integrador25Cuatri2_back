@@ -54,7 +54,7 @@ export const getFunciones = async (req, res) => {
 export const getFuncionPorId = async (req, res) => {
     try {
 
-        //Obtenemos la pelicula por id
+        //Obtenemos la funcion por id
         let {id} = req.params; // Esto nos permite obtener el valor numerico despues de peliculas
 
         const [rows] = await funcionesModels.getFuncionPorId(id);
@@ -99,7 +99,6 @@ export const modifyFuncion = async (req, res) => {
     try {
         //Extraemos el id de la url
         let id = req.id;
-        console.log("id funcion: ", id)
         //Extraemos los datos de la funcion
         let funcion = req.body;
         funcion = {...funcion, id: id}
