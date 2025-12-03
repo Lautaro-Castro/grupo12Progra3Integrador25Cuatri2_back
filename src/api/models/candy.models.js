@@ -1,25 +1,22 @@
 import connection from "../database/db.js";
 
-//Obtenemos todos los productos activos
-const getProductos = () => {
-    const sql = `SELECT * FROM candy WHERE activo = 1 AND tipo = 'producto'`;
-    return connection.query(sql);
-}
-
 //Obtenemos todas los combos activos
-const getCombos = () => {
-    const sql = `SELECT * FROM candy WHERE activo = 1 AND tipo = 'combo'`;
-    return connection.query(sql);
-}
-
-//Obtenemos todas los combos activos
-const getCandy = (tipo) => {
+const getCandyPorTipo = (tipo) => {
     const sql = `SELECT * FROM candy WHERE activo = 1 AND tipo = ? `;
-    
-    return connection.query(sql);
+    return connection.query(sql, [tipo]);
 }
+
+const insertCandy = (candy) => {
+    let sql = `INSERT INTO candy (nombe, descripcion, precio, imagen_url, activo, tipo) VALUES (?, ?, ?, ?, ?, ?)`;
+
+    const values = [candy.nombre, candy.descipcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo]
+
+    return connection.query(sql, values);
+}
+
+
 
 export default {
-    getProductos,
-    getCombos
+    getCandyPorTipo,
+    insertCandy
 }
