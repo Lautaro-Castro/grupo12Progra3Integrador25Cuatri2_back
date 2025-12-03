@@ -11,7 +11,6 @@ export const getFuncionesPorIdPelicula = async (req, res) => {
        
         formato_id = formato_id ? parseInt(formato_id, 10) : null;
         idioma_id = idioma_id ? parseInt(idioma_id, 10) : null;
-
         const [rows] = await funcionesModels.getFuncionesPorIdPelicula(pelicula_id, preventa, formato_id, idioma_id, fecha);
         res.status(200).json({
             payload: rows,
@@ -113,6 +112,31 @@ export const modifyFuncion = async (req, res) => {
             message: "Funcion modificada con exito"
         });
 
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno del servidor",
+            error: error.message
+        })
+    }
+}
+
+export const modifyButacasDisponibles = async  (req, res) => {
+    try {
+
+        //Extraemos el id de la url
+        let id = req.id;
+        //Extraemos los datos de la funcion
+        let {butacas_disponibles} = req.body;
+        let [result] = await funcionesModels.updateButacasDisponiblesFuncion(id, butacas_disponibles);
+        if(result.changedRows === 0){
+            return res.status(200).json({
+                message: "No se actualizaron las butacas disponibles"
+            });
+        }
+
+        res.status(202).json({
+            message: "Butacas disponibles modificadas con exito"
+        });
     } catch (error) {
         res.status(500).json({
             message: "Error interno del servidor",
