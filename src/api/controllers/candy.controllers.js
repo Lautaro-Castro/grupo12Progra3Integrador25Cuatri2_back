@@ -27,14 +27,67 @@ export const getCandy = async (req, res) => {
 }
 
 export const createCandy = async (req, res) => {
-    //Creamos un array con los campos a validar
-    const camposCandy = ['nombre', 'descripcion', 'precio', 'imagen_url', 'activo', 'tipo']
-    //Usamos filter para ver si alguno de los campos de la pelicula falta o no  tiene datos en el req.body
-    const camposFaltantes = camposCandy.filter(campo => !req.body[campo]);
 
-    if(camposFaltantes.length > 0){
-        return res.status(400).json({
-                message: "Datos invalidos, asegurate de enviar todos los campos del formulario"
+    try {
+        let [rows] = await candyModels.insertCandy(req.body);
+        res.status(201).json({
+            message: `Candy creado con exito`,
+            candyId: rows.insertId
         });
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Error interno al crear el candy`
+        });
+    }
+}
+
+export const modifyCandy = async (req, res) => {
+    try {
+        //Extraemos el id de la url
+        const {id} = req.params;
+        //Extraemos los datos del candy
+        let candy = req.body;
+        candy = {...candy, id: id}
+        let [result] = await candyModels.updateCandy(candy);
+        if(result.changedRows === 0){
+            return res.status(200).json({
+                message: "No se actualizo el candy"
+            });
+        }
+
+        res.status(202).json({
+            message: "Candy modificado con exito"
+        });
+    } catch (error) {
+
+        res.status(500).json({
+            message: "Error interno del servidor",
+            error: error.message
+        })
+    }
+}
+
+export const removeCandy = async (req, res) =>{
+    try {
+        let {id} = req.params.id;
+
+        let [result] = await candyModels.deleteCandy(id);
+
+        if(result.affectedRows === 0){
+            return res.status(400).json({
+                message: `No se encontro candy con id: ${id}`
+            });
+        }
+
+        return res.status(200).json({
+            message: `Candy con id ${id} eliminado exitosamente.`
+        })
+    } catch (error) {
+
+        res.status(500).json({
+            message: `Error al eliminar candy con id: ${id}`,
+            error: error.message
+        })
     }
 }

@@ -38,7 +38,6 @@ const updatePelicula = (pelicula) => {
 const deletePelicula = (id) => {
       // Baja logica
       let sql = "UPDATE peliculas SET activa = 0 WHERE id = ?";
-
       return connection.query(sql, [id]);
 }
 
