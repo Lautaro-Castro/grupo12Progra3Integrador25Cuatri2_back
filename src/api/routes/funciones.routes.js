@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createFuncion, getFunciones, getFuncionPorId, modifyFuncion, removeFuncion } from "../controllers/funciones.controllers.js";
+import { createFuncion, getFunciones, getFuncionPorId, modifyButacasDisponibles, modifyFuncion, removeFuncion } from "../controllers/funciones.controllers.js";
 import { validarCamposFuncion, validateId } from "../middlewares/middlewares.js";
 const router = Router();
 
@@ -14,6 +14,9 @@ router.post("/", validarCamposFuncion, createFuncion);
 
 //Endpoint para modificar funcion
 router.put("/:id", validateId, validarCamposFuncion, modifyFuncion);
+
+//Endpoint para modificar butacas disponibles
+router.put("/:id/butacasDisponibles", validateId, modifyButacasDisponibles);
 
 //Endpoint para eliminar funcion
 router.delete("/:id", validateId, removeFuncion);

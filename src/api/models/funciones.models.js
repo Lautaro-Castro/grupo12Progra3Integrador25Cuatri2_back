@@ -153,6 +153,11 @@ const updateFuncion = (funcion) => {
     return connection.query(sql, values);
 }
 
+const updateButacasDisponiblesFuncion = (id, butacas_disponibles) => {
+    let sql = `UPDATE funciones SET butacas_disponibles = ? WHERE id = ?`;
+    return connection.query(sql, [butacas_disponibles, id]);
+}
+
 const deleteFuncion = (id) =>{
     // Baja logica
       let sql = "UPDATE funciones SET activa = 0 WHERE id = ?";
@@ -165,5 +170,6 @@ export default {
     getFuncionPorId,
     insertFuncion,
     updateFuncion,
+    updateButacasDisponiblesFuncion,
     deleteFuncion
 }
