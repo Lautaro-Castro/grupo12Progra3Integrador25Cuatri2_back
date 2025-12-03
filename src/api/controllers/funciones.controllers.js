@@ -51,6 +51,34 @@ export const getFunciones = async (req, res) => {
     }
 }
 
+export const getFuncionPorId = async (req, res) => {
+    try {
+
+        //Obtenemos la pelicula por id
+        let {id} = req.params; // Esto nos permite obtener el valor numerico despues de peliculas
+
+        const [rows] = await funcionesModels.getFuncionPorId(id);
+
+        //Comprobamos que existe la pelicula con ese id
+        if(rows.length === 0) {
+            console.log("Error, no existe funcion con ese id");
+
+            return res.status(404).json({
+                message: `No se encontro funcion con id ${id}`
+            });
+        }
+        
+        res.status(200).json({
+            payload: rows[0]
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno al obtener funcion con id"
+        });
+    }
+}
+
 export const createFuncion = async (req, res) => {
     try {
         let [rows] = await funcionesModels.insertFuncion(req.body);
@@ -71,6 +99,7 @@ export const modifyFuncion = async (req, res) => {
     try {
         //Extraemos el id de la url
         let id = req.id;
+        console.log("id funcion: ", id)
         //Extraemos los datos de la funcion
         let funcion = req.body;
         funcion = {...funcion, id: id}

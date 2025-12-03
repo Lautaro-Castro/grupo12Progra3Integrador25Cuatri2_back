@@ -130,6 +130,13 @@ const getFunciones = (pelicula_id = null, preventa = null, formato_id = null, id
         return connection.query(sql, values);
 }
 
+const getFuncionPorId = (id) =>{
+
+    //Usamos ? por seguridad y evitar inyecciones sql
+    const sql = `SELECT * FROM funciones WHERE id = ?`;
+    return connection.query(sql, [id]); // El id reemplaza nuestro ?
+}
+
 const insertFuncion = (funcion) => {
     let sql = `INSERT INTO funciones (pelicula_id, formato_id, idioma_id, sala, fecha, hora, butacas_disponibles, activa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
@@ -155,6 +162,7 @@ const deleteFuncion = (id) =>{
 export default {
     getFuncionesPorIdPelicula, 
     getFunciones,
+    getFuncionPorId,
     insertFuncion,
     updateFuncion,
     deleteFuncion
