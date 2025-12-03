@@ -50,3 +50,66 @@ export const getFunciones = async (req, res) => {
         });
     }
 }
+
+export const createFuncion = async (req, res) => {
+    try {
+        let [rows] = await funcionesModels.insertFuncion(req.body);
+                res.status(201).json({
+                    message: `Funcion creada con exito`,
+                    funcionId: rows.insertId
+                });
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Error interno al crear la funcion`
+        });
+    }
+}
+
+
+export const modifyFuncion = async (req, res) => {
+    try {
+        //Extraemos el id de la url
+        const {id} = req.params;
+        //Extraemos los datos de la funcion
+        let funcion = req.body;
+        funcion = {...funcion, id: id}
+        let [result] = await funcionesModels.updateFuncion(funcion);
+        if(result.changedRows === 0){
+            return res.status(200).json({
+                message: "No se actualizo la funcion"
+            });
+        }
+
+        res.status(202).json({
+            message: "Funcion modificada con exito"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno del servidor",
+            error: error.message
+        })
+    }
+}
+
+export const removeFuncion = async (req, res) => {
+    try {
+        let {id} = req.params.id;
+        let [result] = await funcionesModels.deleteFuncion(id);
+        if(result.affectedRows === 0){
+            return res.status(400).json({
+                message: `No se encontro funcion con id: ${id}`
+            });
+        }
+
+        return res.status(200).json({
+            message: `Funcion con id ${id} eliminada exitosamente.`
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: `Error al eliminar funcion con id: ${id}`,
+            error: error.message
+        })
+    }
+}

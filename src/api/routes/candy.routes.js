@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { createCandy, getCandy, removeCandy } from "../controllers/candy.controllers.js";
+import { createCandy, getCandy, modifyCandy, removeCandy } from "../controllers/candy.controllers.js";
 import { validarCamposCandy, validateId } from "../middlewares/middlewares.js";
 
 const router = Router();
@@ -11,7 +11,7 @@ router.get("/", getCandy);
 router.post("/", validarCamposCandy, createCandy);
 
 //Endpoint para modificar candy
-router.put("/:id", validarCamposCandy, createCandy);
+router.put("/:id", validarCamposCandy, modifyCandy);
 
 //Endpoint para eliminar candy
 router.delete("/:id", validateId, removeCandy);

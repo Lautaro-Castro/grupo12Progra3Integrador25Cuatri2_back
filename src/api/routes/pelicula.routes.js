@@ -19,7 +19,7 @@ router.get("/:id",validateId , getPeliculaPorId);
 router.get("/:id/funciones", validateId, isPreventa, getFuncionesPorIdPelicula);
 
 //Endpoint para agrear una pelicula nueva
-router.post("/", validarCamposPeliculas,createPelicula);
+router.post("/", validarCamposPeliculas, createPelicula);
 
 //Endpoint para actualizar una pelicula
 router.put("/:id", validateId, validarCamposPeliculas, modifyPelicula);
