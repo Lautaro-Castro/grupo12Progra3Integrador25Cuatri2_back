@@ -90,12 +90,12 @@ const validarCamposFuncion = async (req, res, next) =>{
                 message: "Datos invalidos, asegurate de enviar todos los campos del formulario"
             });
         }
+        next();
     } catch (error) {
         return res.status(500).json({
             error: "Error interno del servidor"
         });
     }
-    next();
 }
 
 export {
