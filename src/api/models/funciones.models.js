@@ -130,7 +130,32 @@ const getFunciones = (pelicula_id = null, preventa = null, formato_id = null, id
         return connection.query(sql, values);
 }
 
+const insertFuncion = (funcion) => {
+    let sql = `INSERT INTO funciones (pelicula_id, formato_id, idioma_id, sala, fecha, hora, butacas_disponibles, activa) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    const values = [funcion.pelicula_id, funcion.formato_id, funcion.idioma_id, funcion.sala, funcion.fecha, funcion.hora, funcion.butacas_disponibles, funcion.activa]
+
+    return connection.query(sql, values);
+}
+
+const updateFuncion = (funcion) => {
+    let sql = `UPDATE funciones SET pelicula_id = ?, formato_id = ?, idioma_id = ?, sala = ?, fecha = ?, hora = ?, butacas_disponibles = ?, activa = ? WHERE id = ?`;
+
+    const values = [funcion.pelicula_id, funcion.formato_id, funcion.idioma_id, funcion.sala, funcion.fecha, funcion.hora, funcion.butacas_disponibles, funcion.activa, funcion.id]
+    
+    return connection.query(sql, values);
+}
+
+const deleteFuncion = (id) =>{
+    // Baja logica
+      let sql = "UPDATE funciones SET activa = 0 WHERE id = ?";
+      return connection.query(sql, [id]);
+}
+
 export default {
     getFuncionesPorIdPelicula, 
-    getFunciones
+    getFunciones,
+    insertFuncion,
+    updateFuncion,
+    deleteFuncion
 }
