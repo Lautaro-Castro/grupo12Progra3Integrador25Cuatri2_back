@@ -70,7 +70,7 @@ export const createFuncion = async (req, res) => {
 export const modifyFuncion = async (req, res) => {
     try {
         //Extraemos el id de la url
-        const {id} = req.params;
+        let id = req.id;
         //Extraemos los datos de la funcion
         let funcion = req.body;
         funcion = {...funcion, id: id}
@@ -95,7 +95,7 @@ export const modifyFuncion = async (req, res) => {
 
 export const removeFuncion = async (req, res) => {
     try {
-        let {id} = req.params.id;
+        let id = req.id;
         let [result] = await funcionesModels.deleteFuncion(id);
         if(result.affectedRows === 0){
             return res.status(400).json({

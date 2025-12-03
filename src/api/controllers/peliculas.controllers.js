@@ -84,7 +84,7 @@ export const createPelicula = async (req, res) =>{
 export const modifyPelicula = async (req, res) => {
     try {
         //Extraemos el id de la url
-        const {id} = req.params;
+        let id = req.id;
         //Extraemos los datos de la pelicula
         let pelicula = req.body;
         pelicula = {...pelicula, id: id}
@@ -110,8 +110,7 @@ export const modifyPelicula = async (req, res) => {
 
 export const removePelicula = async (req, res) => {
     try {
-        let {id} = req.params.id;
-
+        let id = req.id;
         let [result] = await peliculaModels.deletePelicula(id);
 
         if(result.affectedRows === 0){

@@ -2,7 +2,6 @@ import peliculaModels from "../models/peliculas.models.js";
 
 const validateId = (req, res, next) => {
     const { id } = req.params;
-
     // Validamos que el id no sea un numero 
     if(!id || isNaN(Number(id))) {
         return res.status(400).json({

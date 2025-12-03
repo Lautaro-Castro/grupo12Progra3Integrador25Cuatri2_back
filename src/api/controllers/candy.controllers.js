@@ -45,7 +45,7 @@ export const createCandy = async (req, res) => {
 export const modifyCandy = async (req, res) => {
     try {
         //Extraemos el id de la url
-        const {id} = req.params;
+        let id = req.id;
         //Extraemos los datos del candy
         let candy = req.body;
         candy = {...candy, id: id}
@@ -69,8 +69,9 @@ export const modifyCandy = async (req, res) => {
 }
 
 export const removeCandy = async (req, res) =>{
+    
     try {
-        let {id} = req.params.id;
+        let id = req.id;
 
         let [result] = await candyModels.deleteCandy(id);
 
