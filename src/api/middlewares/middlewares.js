@@ -27,12 +27,58 @@ const isPreventa = async (req, res, next ) =>{
     } catch (error) {
         return res.status(500).json({
             error: "Error interno del servidor"
-        })
+        });
+    }
+}
+
+const validarCamposCandy = async (req, res, next) =>{
+    try {
+        //Creamos un array con los campos a validar
+        const camposCandy = ['nombre', 'descripcion', 'precio', 'imagen_url', 'activo', 'tipo']
+
+        //Usamos filter para ver si alguno de los campos del cnady falta o no  tiene datos en el req.body
+        const camposFaltantes = camposCandy.filter(campo => !req.body[campo]);
+    
+        if(camposFaltantes.length > 0){
+            return res.status(400).json({
+                    message: "Datos invalidos, asegurate de enviar todos los campos del formulario"
+            });
+        }
+        next();
+
+    } catch (error) {
+        return res.status(500).json({
+            error: "Error interno del servidor"
+        });
+    }
+}
+
+const validarCamposPeliculas = async (req, res, next) =>{
+    try {
+         //Creamos un array con los campos a validar
+        const camposPelicula = ['nombre', 'sinopsis', 'duracion', 'clasificacion', 'fecha_estreno', 'poster_url', 'distribuidor', 'activa'];
+
+        //Usamos filter para ver si alguno de los campos de la pelicula falta o no tiene datos en el req.body
+        const camposFaltantes = camposPelicula.filter(campo => !req.body[campo]);
+        /*
+        Arriba decidimos crear un array y validar si tenia datos o existian mediante un filter porque al ser demasiados campos, realizar destructuring y escribir la validacion manualmente era sucio, difficil de leer y propensa a erroes de tipeo.
+        */
+        if(camposFaltantes.length > 0){
+            return res.status(400).json({
+                message: "Datos invalidos, asegurate de enviar todos los campos del formulario"
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            error: "Error interno del servidor"
+        });
     }
 }
 
 export {
     validateId,
-    isPreventa
+    isPreventa,
+    validarCamposCandy,
+    validarCamposPeliculas
 }
 

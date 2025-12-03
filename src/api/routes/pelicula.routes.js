@@ -1,7 +1,7 @@
 import {Router} from "express";
 import { getPeliculaPorId, getPeliculasEnCartelera, getPeliculasEnPreVenta, createPelicula, modifyPelicula, removePelicula } from "../controllers/peliculas.controllers.js";
 import { getFuncionesPorIdPelicula } from "../controllers/funciones.controllers.js";
-import { isPreventa, validateId } from "../middlewares/middlewares.js";
+import { isPreventa, validarCamposPeliculas, validateId } from "../middlewares/middlewares.js";
 
 
 const router = Router();
@@ -19,10 +19,10 @@ router.get("/:id",validateId , getPeliculaPorId);
 router.get("/:id/funciones", validateId, isPreventa, getFuncionesPorIdPelicula);
 
 //Endpoint para agrear una pelicula nueva
-router.post("/", createPelicula);
+router.post("/", validarCamposPeliculas,createPelicula);
 
 //Endpoint para actualizar una pelicula
-router.put("/:id", validateId, modifyPelicula);
+router.put("/:id", validateId, validarCamposPeliculas, modifyPelicula);
 
 //Endpoint para eliminar pelicula
 router.delete("/:id", validateId, removePelicula);

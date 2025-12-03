@@ -7,16 +7,30 @@ const getCandyPorTipo = (tipo) => {
 }
 
 const insertCandy = (candy) => {
-    let sql = `INSERT INTO candy (nombe, descripcion, precio, imagen_url, activo, tipo) VALUES (?, ?, ?, ?, ?, ?)`;
+    let sql = `INSERT INTO candy (nombre, descripcion, precio, imagen_url, activo, tipo) VALUES (?, ?, ?, ?, ?, ?)`;
 
-    const values = [candy.nombre, candy.descipcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo]
+    const values = [candy.nombre, candy.descripcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo]
 
     return connection.query(sql, values);
 }
 
+const updateCandy = (candy) => {
+    let sql = `UPDATE candy SET nombre = ?, descripcion = ?, precio = ?,imagen_url = ?, activo = ?, tipo = ? WHERE id = ?`;
 
+    const values = [candy.nombre, candy.descripcion, candy.precio, candy.imagen_url, candy.activo, candy.tipo]
+
+    return connection.query(sql, values);
+}
+
+const deleteCandy = (id) =>{
+    // Baja logica
+      let sql = "UPDATE candy SET activo = 0 WHERE id = ?";
+      return connection.query(sql, [id]);
+}
 
 export default {
     getCandyPorTipo,
-    insertCandy
+    insertCandy,
+    updateCandy,
+    deleteCandy
 }
