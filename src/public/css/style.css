@@ -74,21 +74,33 @@ nav a.activo {
     gap: 20px;
 }
 
-.card-pelicula, .card-candy {
+.card-pelicula {
     width: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 450px;
+    margin-bottom: 30px;
     margin: 0.1rem;
     text-align: center;   
 }
+
+ #contenedor-peliculas{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    color: var(--color-secundario); 
+}
+
+
 
 .card-pelicula p, h2 {
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
 }
+
 
 .card-peliculas-no-encontradas{
     width: 450px;
@@ -101,16 +113,30 @@ nav a.activo {
     text-align: center;
 }
 
-#contenedor-peliculas, #contenedor-candy {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    color: var(--color-secundario);
-}
-
 .pelicula-img{
     width: 200px;
     height: 300px;
+}
+
+.card-candy {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 450px; */
+    margin-bottom: 30px;
+    margin: 0.1rem;
+    text-align: center;   
+}
+
+ #contenedor-candy {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    color: var(--color-secundario); 
+    gap: 40px;        
+    align-items: flex-start;
 }
 
 .candy-img {
@@ -143,26 +169,60 @@ button:active {
 }
 
 .titulo-contenedor{
-    margin-bottom: 1.5rem;
-    border-bottom: 3px var(--color-detalles) solid;
+    margin: 2rem auto 1.5rem;
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--color-secundario);
+
+    display: inline-block;     
+    border-bottom: 3px solid var(--color-detalles);
+    padding-bottom: .3rem;
 }
 
 
 /* ====== FUNCIONES ADMIN / MODAL ====== */
 #filtros-funciones {
-    margin-top: 10px;
+    margin: 15px;
     display: flex;
     justify-content: center;
     gap: 20px;
     color: var(--color-secundario);
+    align-items: center;
+    margin: 30px auto; 
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border-radius: 12px;
+    max-width: 900px;
+}
+
+#filtros-funciones label {
+    font-size: 1.1rem; 
+    font-weight: bold;
+    color: var(--color-secundario); 
+    margin-right: 5px;
+}
+
+#filtros-funciones input {
+    padding: 12px 15px;      
+    border-radius: 8px;      
+    border: 1px solid #555;
+    background-color: #222;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#btn-agregar-funcion:hover {
+    transform: scale(1.05);  /* Crece un poco al pasar el mouse */
+    background-color: #ffd700;
 }
 
 #contenedor-funciones-admin {
     margin-top: 20px;
     color: var(--color-secundario);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 
@@ -178,6 +238,18 @@ button:active {
     justify-content: center;
     align-items: center;
     z-index: 5000;
+}
+
+#btn-agregar-funcion, #agregar-pelicula, #btn-agregar-candy{
+    display: flex;
+    justify-content: center;
+}
+
+#contenedor-funciones-lista{ 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 20px;
 }
 
 .modal-contenido-funcion {
@@ -220,41 +292,117 @@ button:active {
     font-family: Arial, sans-serif;
 }
 
-.form-alta label {
-    display: block;         /* Hace que el label ocupe su propia linea */
-    margin-bottom: 8px;     /* Espacio entre el texto y el input */
-    font-weight: bold;
-    color: var(--color-secundario);
+/* 
+============
+  FORMULARIO
+===========*/
+/* CONTENEDOR DEL FORMULARIO */
+.form-alta {
+    max-width: 700px;              /* ancho máximo */
+    margin: 2rem auto;             /* centrado */
+    padding: 2rem;
+    background-color: #1d1d1d;     /* fondo tipo card */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 0.75rem;
 }
 
-/* Los campos de texto y selects */
-.form-alta textarea,
+/* LABELS */
+.form-alta label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-secundario);
+    margin-bottom: 0.15rem;
+}
+
+/* INPUTS, SELECTS, TEXTAREA */
 .form-alta input[type="text"],
 .form-alta input[type="number"],
 .form-alta input[type="date"],
-.form-alta select {
-    width: 100%;            /* Ocupar todo el ancho disponible */
-    padding: 12px;          /* Relleno interno para que no se vea chico el texto */
-    margin-bottom: 20px;    /* Espacio antes del siguiente campo */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* IMPORTANTE: Para que el padding no rompa el ancho */
-    font-size: 16px;
+.form-alta input[type="time"],
+.form-alta select,
+.form-alta textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #555;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    background-color: #2a2a2a;
+    color: #f5f5f5;
 }
 
-/* Botón de Guardar */
+.form-alta input[type="text"]:focus,
+.form-alta input[type="number"]:focus,
+.form-alta input[type="date"]:focus,
+.form-alta input[type="time"]:focus,
+.form-alta select:focus,
+.form-alta textarea:focus {
+    outline: none;
+    border-color: #f1b400;
+    box-shadow: 0 0 0 2px rgba(241,180,0,0.3);
+}
+
+/* BOTÓN CREAR FUNCIÓN */
 .form-alta input[type="submit"] {
-    width: 100%;
-    padding: 15px;
-    background-color: #28a745; /* Verde éxito */
-    color: white;
+    grid-column: 1 / -1;           /* ocupa todo el ancho */
+    margin-top: 0.5rem;
+    padding: 0.9rem;
+    background-color: #f1b400;
+    color: #1d1d1d;
     border: none;
-    border-radius: 4px;
-    font-size: 18px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s;
 }
 
 .form-alta input[type="submit"]:hover {
-    background-color: #218838; /* Verde más oscuro al pasar el mouse */
+    background-color: #ffcc33;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transform: translateY(-1px);
+}
+
+.form-alta input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+/* BOTÓN CANCELAR */
+#btn-cancelar-creacion-funcion, #btn-cancelar-creacion-pelicula, #btn-cancelar-creacion-candy {
+    display: block;
+    margin: 0.5rem auto 2rem auto;
+    padding: 0.6rem 1.8rem;
+    background-color: #666;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.15s;
+    display: flex;
+    justify-content: center;
+}
+
+#btn-cancelar-creacion-funcion:hover,
+#btn-cancelar-creacion-candy:hover {
+    background-color: #888;
+    transform: translateY(-1px);
+}
+
+
+/* FUNCIONES */
+
+.card-funcion-admin{
+    border: 2px solid var(--color-detalles);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
