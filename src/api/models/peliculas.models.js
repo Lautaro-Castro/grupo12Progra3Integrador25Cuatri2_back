@@ -2,7 +2,7 @@ import connection from "../database/db.js";
 
 //Seleccionamos las peliculas en cartelera
 const getPeliculasEnCartelera = () => {
-    const sql = `SELECT * FROM peliculas WHERE activa = 1 AND fecha_fin_cartelera >= CURDTATE() AND fecha_estreno <= CURDATE()`;
+    const sql = `SELECT * FROM peliculas WHERE activa = 1 AND fecha_fin_cartelera >= CURDATE() AND fecha_estreno <= CURDATE()`;
     return connection.query(sql);
 }
 
