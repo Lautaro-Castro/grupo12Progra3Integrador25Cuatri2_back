@@ -56,15 +56,16 @@ async function crearFormulario(candy) {
                 <option value="0">No</option>
             </select>
 
-            <select type="text" name="tipo" id="activo-candy" value="${candy.tipo}" required>
-                <option value="producto">Producto</option>
-                <option value="combo">Combo</option>
+            <select type="text" name="tipo" id="activo-candy" required>
+                <option value="producto" ${candy.tipo === 'producto' ? 'selected' : ''}>Producto</option>
+                <option value="combo" ${candy.tipo === 'combo' ? 'selected' : ''}>Combo</option>
             </select>
 
             <input type="submit" value="Actualizar candy">
         </form>
         <button id="btn-cancelar-edicion-candy">Cancelar</button>
     `;
+    console.log(`${candy.tipo}`);
 
     updateFormContainer.innerHTML = updateFormHTML;
     let botonCancelarEdicion = document.getElementById("btn-cancelar-edicion-candy");
