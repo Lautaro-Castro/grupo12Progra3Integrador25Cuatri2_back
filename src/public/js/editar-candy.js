@@ -45,7 +45,7 @@ async function crearFormulario(candy) {
             <input type="text" name="descripcion" id="descripcion-candy" value="${candy.descripcion}" required>
             
             <label for="precio-candy">Precio</label>
-            <input name="precio" id="precio-candy" value="${candy.precio}">
+            <input type="number" name="precio" id="precio-candy" value="${candy.precio}">
 
             <label for="img-candy">Imagen</label>
             <input type="text" name="imagen_url" id="img-candy" value="${candy.imagen_url}" required>
